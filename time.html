@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer Responsivo</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #timer-container {
+      text-align: center;
+    }
+
+    #timer {
+      font-size: 2em;
+      color: #333;
+    }
+
+    #button-container {
+      margin-top: 20px;
+    }
+
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    #start-btn {
+      background-color: green;
+    }
+
+    #reset-btn {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="timer-container">
+    <div id="timer">00:00:00</div>
+    <div id="button-container">
+      <button id="start-btn">Iniciar</button>
+      <button id="reset-btn">Resetar</button>
+    </div>
+  </div>
+
+  <script>
+    let timerInterval;
+    let seconds = 0;
+
+    function updateTimer() {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds = seconds % 60;
+
+      document.getElementById('timer').textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }
+
+    document.getElementById('start-btn').addEventListener('click', function () {
+      if (!timerInterval) {
+        timerInterval = setInterval(function () {
+          seconds++;
+          updateTimer();
+        }, 1000);
+      }
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', function () {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      seconds = 0;
+      updateTimer();
+    });
+  </script>
+</body>
+</html>
